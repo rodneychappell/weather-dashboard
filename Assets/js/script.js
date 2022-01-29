@@ -1,23 +1,21 @@
-const app = 
-{
+const app = {
   init: () => {
     document
-      .getElementById('btnGet')
-      .addEventListener('click', app.fetchWeather);
+      .getElementById("btnGet")
+      .addEventListener("click", app.fetchWeather);
     document
-      .getElementById('btnCurrent')
-      .addEventListener('click', app.getLocation);
+      .getElementById("btnLocation")
+      .addEventListener("click", app.getLocation);
   },
   fetchWeather: (ev) => {
-    //use the values from latitude and longitude to fetch the weather
-    let lat = document.getElementById('latitude').value;
-    let lon = document.getElementById('longitude').value;
-    let key = '9c0f79ae9abec4622cc5f41d84921f11';
-    let lang = 'en';
-    let units = 'metric';
-    let url = `http://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${key}&units=${units}&lang=${lang}`;
-    
-    //fetch the weather
+    // -   use the values from latitude and longitude to fetch the weather -  //
+    let lat = document.getElementById("latitude").value;
+    let lon = document.getElementById("longitude").value;
+    let key = "9c0f79ae9abec4622cc5f41d84921f11";
+    let units = "metric";
+    let url = `http://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${key}&units=${units}&lang=en`;
+
+      // -   fetch the weather  -  //
     fetch(url)
       .then((resp) => {
         if (!resp.ok) throw new Error(resp.statusText);
@@ -37,21 +35,18 @@ const app =
     navigator.geolocation.getCurrentPosition(app.ftw, app.wtf, opts);
   },
   ftw: (position) => {
-    //got position
-    document.getElementById('latitude').value =
+      // -   got position  -  //
+    document.getElementById("latitude").value =
       position.coords.latitude.toFixed(2);
-    document.getElementById('longitude').value =
+    document.getElementById("longitude").value =
       position.coords.longitude.toFixed(2);
   },
-  wtf: (err) => {
-    //geolocation failed
-    console.error(err);
-  },
+ 
   showWeather: (resp) => {
     console.log(resp);
-    let row = document.querySelector('.weather.row');
-    //clear out the old weather and add the new
-    // row.innerHTML = '';
+    let row = document.querySelector(".weather.row");
+      // -   clear out the old weather and add the new  -  //
+    
     row.innerHTML = resp.daily
       .map((day, idx) => {
         if (idx <= 5) {
@@ -92,9 +87,8 @@ const app =
           </div>`;
         }
       })
-      .join(' ');
+      .join(" ");
   },
-}
-
+};
 
 app.init();
